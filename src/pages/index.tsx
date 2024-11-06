@@ -36,9 +36,7 @@ export default function Home() {
             priority
           />
           <ol>
-            <li>
-              Get started by editing <code>src/pages/index.tsx</code>.
-            </li>
+            <li>'Это development serv'</li>
             <li>Save and see your changes instantly.</li>
           </ol>
 
