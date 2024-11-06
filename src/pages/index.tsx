@@ -36,7 +36,7 @@ export default function Home() {
             priority
           />
           <ol>
-            <li>'Это development serv'</li>
+            <li>'Это development serv new'</li>
             <li>Save and see your changes instantly.</li>
           </ol>
 
