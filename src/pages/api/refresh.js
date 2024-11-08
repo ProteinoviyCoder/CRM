@@ -46,7 +46,9 @@ export default async function handler(req, res) {
 
       return res.status(200).json({ message: "Access token refreshed" });
     } catch (error) {
-      return res.status(401).json({ message: "Invalid refresh token" });
+      return res
+        .status(401)
+        .json({ ...error, message: "Invalid refresh token" });
     }
   } else {
     res.setHeader("Allow", ["POST"]);

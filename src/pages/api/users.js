@@ -1,5 +1,3 @@
-import bcrypt from "bcrypt";
-
 export const users = [
   {
     id: "1",
@@ -53,7 +51,7 @@ export default async function handler(req, res) {
       // Если токен невалидный или истек, возвращаем ошибку
       return res
         .status(401)
-        .json({ message: "Invalid or expired access token" });
+        .json({ ...error, message: "Invalid or expired access token" });
     }
   } else {
     res.setHeader("Allow", ["GET"]);
