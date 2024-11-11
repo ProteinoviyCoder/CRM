@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/apiHooks";
 import { Box, CircularProgress } from "@mui/material";
-import { FC, memo, ReactNode, useEffect, useState } from "react";
+import { FC, memo, ReactNode, useEffect } from "react";
 import { useLazyGetUserQuery } from "../api/getUser";
 import { actionSetUser, actionChangefirstTry } from "../model/userSlice";
 import { useRouter } from "next/router";
@@ -21,10 +21,13 @@ const InitialAuth: FC<AuthProps> = ({ children }) => {
         const updateUser = async () => {
           const response = await getUser(null);
 
-          response.isSuccess &&
+          if (response.isSuccess) {
             dispatch(actionSetUser(response.data.userForResponse));
+          }
 
-          response.isError && dispatch(actionChangefirstTry(false));
+          if (response.isError) {
+            dispatch(actionChangefirstTry(false));
+          }
 
           if (response.isError && router.pathname !== "/login") {
             router.replace("/login");

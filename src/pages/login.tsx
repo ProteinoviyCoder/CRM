@@ -40,7 +40,7 @@ const Login: FC = () => {
 
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [getAuth, { error: getAuthError }] = useGetAuthMutation();
+  const [getAuth] = useGetAuthMutation();
 
   const handleKeyDownEmail = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === " ") {
