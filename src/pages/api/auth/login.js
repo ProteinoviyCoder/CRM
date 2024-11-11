@@ -1,6 +1,7 @@
 // pages/api/auth.js
 import jwt from "jsonwebtoken";
-import { users } from "./users";
+import { usersBD } from "../allUsers/usersBD";
+import bcrypt from "bcrypt";
 
 // Секретный ключ для подписи токенов
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
@@ -20,18 +21,24 @@ function generateTokens(id) {
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     // Проверка логина
-    const user = users.find((u) => u.username === username);
+    const user = usersBD.find((user) => user.email === email);
     if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({
+        status: 401,
+        message: "Такого пользователя не существует",
+      });
     }
 
     // Сравнение хеша пароля
     const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({
+        status: 401,
+        message: "Неверный логин или пароль",
+      });
     }
 
     // Генерация токенов
@@ -43,25 +50,25 @@ export default async function handler(req, res) {
     // Отправка ответа с токенами в куки
     const isProd = process.env.NODE_ENV === "production";
 
-    res.setHeader(
-      "Set-Cookie",
-      `accessToken=${accessToken}; HttpOnly; Path=/; Max-Age=1200; ${
+    res.setHeader("Set-Cookie", [
+      `accessToken=${accessToken}; HttpOnly; Path=/; Max-Age=1200; Domain; ${
         isProd ? "Secure; SameSite=Strict" : ""
-      }`
-    ); // Устанавливаем accessToken в куки
-
-    res.setHeader(
-      "Set-Cookie",
-      `refreshToken=${refreshToken}; HttpOnly; Path=/; Max-Age=2592000; ${
+      }`,
+      `refreshToken=${refreshToken}; HttpOnly; Path=/; Max-Age=2592000; Domain; ${
         isProd ? "Secure; SameSite=Strict" : ""
-      }`
-    ); // Устанавливаем refreshToken в куки
+      }`,
+    ]);
 
     return res.status(200).json({
+      status: 200,
+
       message: "Login successful",
       user: {
         id: user.id,
         email: user.email,
+        username: user.username,
+        permissions: user.permissions,
+        role: user.role,
       },
     });
   } else {

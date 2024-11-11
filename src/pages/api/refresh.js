@@ -1,13 +1,15 @@
 // pages/api/refresh.js
 import jwt from "jsonwebtoken";
-import { users } from "./users";
+import { usersBD } from "./allUsers/usersBD";
+import { parseCookies } from "./process/parseCookies";
 
-const ACCESS_TOKEN_SECRET = "your-access-token-secret";
-const REFRESH_TOKEN_SECRET = "your-refresh-token-secret";
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const refreshToken = req.cookies.refreshToken;
+    const cookeis = parseCookies(req.headers.cookie);
+    const refreshToken = cookeis.refreshToken;
 
     if (!refreshToken) {
       return res.status(401).json({ message: "Refresh token is missing" });
@@ -18,11 +20,13 @@ export default async function handler(req, res) {
       const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
 
       // Находим пользователя по id из refresh token
-      const user = users.find((u) => u.id === decoded.id);
+      const user = usersBD.find((user) => user.id === decoded.id);
 
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
+
+      console.log(refreshToken, user.refreshToken);
 
       if (user.refreshToken !== refreshToken) {
         return res.status(403).json({ message: "Refresh token mismatch" });
@@ -39,7 +43,7 @@ export default async function handler(req, res) {
       // Отправляем новый access token в клиент
       res.setHeader(
         "Set-Cookie",
-        `accessToken=${newAccessToken}; HttpOnly; Path=/; Max-Age=1200; ${
+        `accessToken=${newAccessToken}; HttpOnly; Path=/; Max-Age=1200; Domain; ${
           isProd ? "Secure; SameSite=Strict" : ""
         }`
       );

@@ -1,3 +1,16 @@
+import jwt from "jsonwebtoken";
+
+function parseCookies(cookieHeader) {
+  const cookies = {};
+  if (cookieHeader) {
+    cookieHeader.split(";").forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+      cookies[name] = value;
+    });
+  }
+  return cookies;
+}
+
 export const users = [
   {
     id: "1",
@@ -5,6 +18,7 @@ export const users = [
     email: "user1@test.com",
     passwordHash:
       "$2b$10$mKtlPj/EKayTYCAS6jjtVeq3/DIcZS/0kB9zmeDCGJX7xHlnTcY6a",
+    permissions: ["get_users"],
   },
   {
     id: "2",
@@ -15,13 +29,19 @@ export const users = [
   },
 ];
 
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+
 export default async function handler(req, res) {
   if (req.method === "GET") {
     // Проверка доступа по access token в куки
-    const accessToken = req.cookies.accessToken;
+
+    const cookies = parseCookies(req.headers.cookie || "");
+    const accessToken = cookies.accessToken;
 
     if (!accessToken) {
-      return res.status(401).json({ message: "Access token is missing" });
+      return res.status(401).json({
+        message: "Access token is missing",
+      });
     }
 
     try {
@@ -49,9 +69,11 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       // Если токен невалидный или истек, возвращаем ошибку
-      return res
-        .status(401)
-        .json({ ...error, message: "Invalid or expired access token" });
+      return res.status(401).json({
+        ...error,
+        message: "Invalid or expired access token",
+        error: error.message,
+      });
     }
   } else {
     res.setHeader("Allow", ["GET"]);
