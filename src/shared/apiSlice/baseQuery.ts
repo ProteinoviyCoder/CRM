@@ -4,7 +4,6 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query";
-import { useAppDispatch } from "../hooks/apiHooks";
 import { actionLogoutUser } from "@/features/auth/model/userSlice";
 
 const baseSettingRequest = fetchBaseQuery({
