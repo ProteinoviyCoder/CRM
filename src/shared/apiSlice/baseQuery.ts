@@ -4,6 +4,8 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query";
+import { useAppDispatch } from "../hooks/apiHooks";
+import { actionLogoutUser } from "@/features/auth/model/userSlice";
 
 const baseSettingRequest = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_URL_SERVER,
@@ -36,7 +38,7 @@ export const baseQuery: BaseQueryFn<
     );
 
     if (!refreshRequest.data) {
-      console.log("User should get exit from system");
+      api.dispatch(actionLogoutUser());
       return baseRequest;
     }
 

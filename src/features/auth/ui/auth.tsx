@@ -36,10 +36,13 @@ const InitialAuth: FC<AuthProps> = ({ children }) => {
 
         updateUser();
       } else {
+        if (router.pathname === "/login") {
+          return;
+        }
         router.replace("/login");
       }
     }
-  }, [user, isAuth]);
+  }, [user, isAuth, isFirstTry]);
 
   if (!isAuth && router.pathname !== "/login") {
     return (
