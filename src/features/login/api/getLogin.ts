@@ -1,9 +1,9 @@
 import { apiStore } from "@/shared/apiSlice/api";
 import type { DataLogin, ResLoginDto } from "../model/types";
 
-const getAuth = apiStore.injectEndpoints({
+const getLogin = apiStore.injectEndpoints({
   endpoints: (builder) => ({
-    getAuth: builder.mutation<ResLoginDto, DataLogin>({
+    getLogin: builder.mutation<ResLoginDto, DataLogin>({
       query: (body) => ({
         method: "POST",
         url: "auth/login",
@@ -13,4 +13,4 @@ const getAuth = apiStore.injectEndpoints({
   }),
 });
 
-export const { useGetAuthMutation } = getAuth;
+export const { useGetLoginMutation } = getLogin;

@@ -1,10 +1,10 @@
 import { Container, Box } from "@mui/material";
+import { RegistrationForm } from "@/features/registration/ui/registrationForm";
 import { FC, useEffect } from "react";
-import { LoginForm } from "@/features/login/ui/loginForm";
-import { useAppSelector } from "@/shared/hooks/apiHooks";
 import { useRouter } from "next/router";
+import { useAppSelector } from "@/shared/hooks/apiHooks";
 
-const Login: FC = () => {
+const RegisterPage: FC = () => {
   const router = useRouter();
 
   const userData = useAppSelector((state) => state.user);
@@ -29,10 +29,10 @@ const Login: FC = () => {
           height: "100dvh",
         }}
       >
-        <LoginForm />
+        <RegistrationForm />
       </Box>
     </Container>
   );
 };
 
-export default Login;
+export default RegisterPage;

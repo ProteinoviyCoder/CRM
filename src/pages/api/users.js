@@ -1,33 +1,8 @@
 import jwt from "jsonwebtoken";
 
-function parseCookies(cookieHeader) {
-  const cookies = {};
-  if (cookieHeader) {
-    cookieHeader.split(";").forEach((cookie) => {
-      const [name, value] = cookie.trim().split("=");
-      cookies[name] = value;
-    });
-  }
-  return cookies;
-}
 
-export const users = [
-  {
-    id: "1",
-    username: "user1",
-    email: "user1@test.com",
-    passwordHash:
-      "$2b$10$mKtlPj/EKayTYCAS6jjtVeq3/DIcZS/0kB9zmeDCGJX7xHlnTcY6a",
-    permissions: ["get_users"],
-  },
-  {
-    id: "2",
-    username: "user2",
-    email: "user2@test.com",
-    passwordHash:
-      "$2b$10$krpoS4d5ySuHmNzJjv5IIumAIo/tmA6HhNh0GVLOmF/DYyPKwc8/C",
-  },
-];
+
+
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 

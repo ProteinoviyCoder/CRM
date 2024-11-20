@@ -1,6 +1,7 @@
-import { actionSetUser } from "@/features/auth/model/userSlice";
-import { useGetAuthMutation } from "@/features/login/api/getAuth";
+import { actionSetUser } from "@/shared/storeSlices/userSlice";
+import { useGetLoginMutation } from "@/features/login/api/getLogin";
 import { useAppDispatch } from "@/shared/hooks/apiHooks";
+import { alpha } from "@mui/material";
 import {
   FC,
   FormEvent,
@@ -20,16 +21,17 @@ import {
 import { LoginFormData } from "../model/types";
 import { useRouter } from "next/router";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
-import type { User } from "@/features/auth/model/types";
+import type { User } from "@/shared/storeSlices/userSlice";
+import { actionSetBusiness } from "@/shared/storeSlices/businessSlice";
+import type { Business } from "@/shared/storeSlices/businessSlice";
 
 const InitialLoginForm: FC = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [getAuth] = useGetAuthMutation();
+  const [getLogin] = useGetLoginMutation();
 
   const [loginFormData, setLoginFormData] = useState<LoginFormData>({
-    email: {
+    username: {
       text: "",
       error: false,
       color: "primary",
@@ -45,22 +47,39 @@ const InitialLoginForm: FC = () => {
   });
   const [errorLogin, setErrorLogin] = useState<string>("");
 
-  const handleKeyDownEmail = (e: KeyboardEvent<HTMLInputElement>): void => {
+  const handleKeyDownUsername = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === " ") {
       e.preventDefault();
     }
+
+    if (
+      e.key === ">" ||
+      e.key === "<" ||
+      e.key === "?" ||
+      e.key === "/" ||
+      e.key === "\\"
+    ) {
+      e.preventDefault();
+
+      setLoginFormData((prev) => ({
+        ...prev,
+        username: {
+          ...prev.username,
+          error: true,
+          errorMessage: `Invalid symbol: ${e.key}`,
+          color: "error",
+        },
+      }));
+    }
   };
 
-  const validationEmail = (e: ChangeEvent<HTMLInputElement>): void => {
-    const value = e.target.value.replace(
-      /[^a-zA-Z0-9áéíóúüÁÉÍÓÚÜñÑàèìòùâêîôûäëïöüçÇ._@-]/g,
-      ""
-    );
+  const validationUsername = (e: ChangeEvent<HTMLInputElement>): void => {
+    const value = e.target.value;
 
     setLoginFormData((prev) => ({
       ...prev,
-      email: {
-        ...prev.email,
+      username: {
+        ...prev.username,
         text: value,
         error: false,
         errorMessage: "",
@@ -106,8 +125,8 @@ const InitialLoginForm: FC = () => {
   const handleSubmitLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await getAuth({
-      email: loginFormData.email.text,
+    const response = await getLogin({
+      username: loginFormData.username.text,
       password: loginFormData.password.text,
     });
 
@@ -123,14 +142,19 @@ const InitialLoginForm: FC = () => {
     }
 
     const user: User = {
-      id: response.data!.user!.id!,
-      username: response.data!.user!.username!,
-      email: response.data!.user!.email!,
-      permissions: response.data!.user!.permissions!,
-      role: response.data!.user!.role!,
+      id: response.data!.userForResponse!.id!,
+      username: response.data!.userForResponse!.username!,
+      permissions: response.data!.userForResponse!.permissions!,
+      role: response.data!.userForResponse!.role!,
+    };
+
+    const business: Business = {
+      businessName: response.data!.businessName!,
+      businessTasks: [...response.data!.tasks!],
     };
 
     dispatch(actionSetUser(user));
+    dispatch(actionSetBusiness(business));
 
     router.replace("/");
   };
@@ -139,35 +163,37 @@ const InitialLoginForm: FC = () => {
     <Box
       onSubmit={handleSubmitLogin}
       component="form"
-      sx={{
+      sx={(theme) => ({
         width: "100%",
         maxWidth: "400px",
         padding: "25px 10px",
         display: "flex",
         flexDirection: "column",
         gap: "20px",
-        border: `1px solid black`,
+        border: `1px solid ${theme.palette.primary.dark}`,
         borderRadius: "10px",
-      }}
+        backgroundColor: "background.paper",
+      })}
     >
-      <Typography variant="h4" align="center" sx={{ marginBottom: "10px" }}>
-        Login
+      <Typography variant="h4" align="center" sx={{ marginBottom: "20px" }}>
+        Authorization
       </Typography>
       <TextField
-        value={loginFormData.email.text}
-        onChange={validationEmail}
+        value={loginFormData.username.text}
+        onChange={validationUsername}
         required
-        type="email"
-        label={"email"}
+        type="text"
+        label={"username"}
         fullWidth
-        onKeyDown={handleKeyDownEmail}
-        color={loginFormData.email.color}
+        onKeyDown={handleKeyDownUsername}
+        color={loginFormData.username.color}
         helperText={
-          loginFormData.email.error && loginFormData.email.errorMessage
+          loginFormData.username.error && loginFormData.username.errorMessage
         }
         FormHelperTextProps={{
           sx: { color: "error.main" },
         }}
+        sx={{ backgroundColor: "background.paper" }}
       />
       <TextField
         value={loginFormData.password.text}
@@ -182,7 +208,9 @@ const InitialLoginForm: FC = () => {
           loginFormData.password.error && loginFormData.password.errorMessage
         }
         FormHelperTextProps={{
-          sx: { color: "error.main" },
+          sx: {
+            color: "error.main",
+          },
         }}
         InputProps={{
           endAdornment: (
@@ -207,19 +235,53 @@ const InitialLoginForm: FC = () => {
             </InputAdornment>
           ),
         }}
+        sx={{ backgroundColor: "background.paper" }}
       />
-      {errorLogin && <Alert severity="error">{errorLogin}</Alert>}
+      {errorLogin && (
+        <Alert
+          severity="error"
+          sx={(theme) => ({
+            backgroundColor: alpha(theme.palette.error.main, 0.4),
+          })}
+        >
+          {errorLogin}
+        </Alert>
+      )}
 
       <Button
         variant="contained"
         disabled={
-          loginFormData.email.text === "" || loginFormData.password.text === ""
+          loginFormData.username.text === "" ||
+          loginFormData.password.text === ""
             ? true
             : false
         }
         type="submit"
+        sx={{
+          backgroundColor: "primary.main",
+          fontWeight: "600",
+          padding: "10px",
+        }}
       >
-        Go
+        Log in
+      </Button>
+
+      <Button
+        variant="outlined"
+        sx={(theme) => ({
+          marginTop: "35px",
+          fontWeight: "400",
+          color: theme.palette.getContrastText(theme.palette.secondary.main),
+          borderColor: "secondary.main",
+          ":hover": {
+            backgroundColor: "secondary.main",
+            opacity: "0.95",
+            color: theme.palette.getContrastText(theme.palette.secondary.main),
+          },
+        })}
+        onClick={() => router.replace("/registration")}
+      >
+        Registration new business
       </Button>
     </Box>
   );

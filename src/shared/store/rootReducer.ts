@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import { apiStore } from "@/shared/apiSlice/api";
-import userSlice from "@/features/auth/model/userSlice";
+import userReducer from "@/shared/storeSlices/userSlice";
+import businessReducer from "@/shared/storeSlices/businessSlice";
 
 export const rootReducer = combineReducers({
   [apiStore.reducerPath]: apiStore.reducer,
-  user: userSlice,
+  user: userReducer,
+  business: businessReducer,
 });

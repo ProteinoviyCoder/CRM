@@ -1,42 +1,59 @@
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/apiHooks";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Snackbar } from "@mui/material";
 import { FC, memo, ReactNode, useEffect } from "react";
-import { useLazyGetUserQuery } from "../api/getUser";
-import { actionSetUser, actionChangefirstTry } from "../model/userSlice";
+import { useLazyGetAuthQuery } from "../api/getAuth";
+import {
+  actionSetUser,
+  actionChangefirstTry,
+} from "../../../shared/storeSlices/userSlice";
 import { useRouter } from "next/router";
+import { actionSetBusiness } from "@/shared/storeSlices/businessSlice";
 
-interface AuthProps {
+interface InitialAuthProps {
   children?: ReactNode;
 }
 
-const InitialAuth: FC<AuthProps> = ({ children }) => {
+const InitialAuth: FC<InitialAuthProps> = ({ children }) => {
   const dispatch = useAppDispatch();
   const { user, isAuth, isFirstTry } = useAppSelector((state) => state.user);
-  const [getUser] = useLazyGetUserQuery();
+  const [getAuth] = useLazyGetAuthQuery();
   const router = useRouter();
 
   useEffect(() => {
     if (!user && !isAuth) {
       if (isFirstTry) {
         const updateUser = async () => {
-          const response = await getUser(null);
+          const response = await getAuth(null);
 
           if (response.isSuccess) {
-            dispatch(actionSetUser(response.data.userForResponse));
+            dispatch(actionSetUser(response.data!.userForResponse!));
+            dispatch(
+              actionSetBusiness({
+                businessName: response.data!.businessName!,
+                businessTasks: response.data!.tasks!,
+              })
+            );
           }
 
           if (response.isError) {
             dispatch(actionChangefirstTry(false));
           }
 
-          if (response.isError && router.pathname !== "/login") {
+          if (
+            response.isError &&
+            router.pathname !== "/login" &&
+            router.pathname !== "/registration"
+          ) {
             router.replace("/login");
           }
         };
 
         updateUser();
       } else {
-        if (router.pathname === "/login") {
+        if (
+          router.pathname === "/login" ||
+          router.pathname === "/registration"
+        ) {
           return;
         }
         router.replace("/login");
@@ -44,7 +61,11 @@ const InitialAuth: FC<AuthProps> = ({ children }) => {
     }
   }, [user, isAuth, isFirstTry]);
 
-  if (!isAuth && router.pathname !== "/login") {
+  if (
+    !isAuth &&
+    router.pathname !== "/login" &&
+    router.pathname !== "/registration"
+  ) {
     return (
       <Box
         sx={{

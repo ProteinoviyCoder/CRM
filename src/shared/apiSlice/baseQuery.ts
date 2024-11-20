@@ -4,7 +4,8 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query";
-import { actionLogoutUser } from "@/features/auth/model/userSlice";
+import { actionLogoutUser } from "@/shared/storeSlices/userSlice";
+import { actionClearBusiness } from "../storeSlices/businessSlice";
 
 const baseSettingRequest = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_URL_SERVER,
@@ -31,13 +32,14 @@ export const baseQuery: BaseQueryFn<
     }
 
     const refreshRequest = await baseSettingRequest(
-      { url: "refresh", method: "POST" },
+      { url: "auth/refreshToken", method: "POST" },
       api,
       extraOptions
     );
 
     if (!refreshRequest.data) {
       api.dispatch(actionLogoutUser());
+      api.dispatch(actionClearBusiness());
       return baseRequest;
     }
 

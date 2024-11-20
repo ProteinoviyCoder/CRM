@@ -1,28 +1,10 @@
-export type User = {
-  id: string;
-  username: string;
-  email: string;
-  permissions: string | string[];
-  role: string;
-};
+import type { User } from "@/shared/storeSlices/userSlice";
+import type { BusinessTask } from "@/shared/storeSlices/businessSlice";
 
-export type UserDto = {
-  userForResponse: User;
-  message: string;
-};
-
-export type LoginFormData = {
-  email: {
-    text: string;
-    error: boolean;
-    color: "primary" | "error";
-    errorMessage: string;
-  };
-  password: {
-    text: string;
-    error: boolean;
-    color: "primary" | "error";
-    errorMessage: string;
-    isVisibleText: boolean;
-  };
+export type ResAuthDto = {
+  status?: number;
+  message?: string;
+  userForResponse?: User;
+  tasks?: BusinessTask[];
+  businessName?: string;
 };
