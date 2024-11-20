@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/apiHooks";
-import { Box, CircularProgress, Snackbar } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { FC, memo, ReactNode, useEffect } from "react";
 import { useLazyGetAuthQuery } from "../api/getAuth";
 import {

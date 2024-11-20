@@ -44,7 +44,7 @@ export default async function handler(req, res) {
         (owner) => owner.owner.username === username
       );
       user = owner;
-    } catch (error) {
+    } catch {
       return res.status(401).json({
         status: 401,
         message: "Такого пользователя не существует",

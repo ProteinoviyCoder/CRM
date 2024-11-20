@@ -31,7 +31,6 @@ const InitialRegistrationForm: FC = () => {
         isVisibleText: false,
       },
     });
-  const [errorLogin, setErrorLogin] = useState<string>("");
 
   const handleKeyDownUsername = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === " ") {
@@ -189,16 +188,6 @@ const InitialRegistrationForm: FC = () => {
         }}
         sx={{ backgroundColor: "background.paper" }}
       />
-      {errorLogin && (
-        <Alert
-          severity="error"
-          sx={(theme) => ({
-            backgroundColor: alpha(theme.palette.error.main, 0.4),
-          })}
-        >
-          {errorLogin}
-        </Alert>
-      )}
 
       <Button
         variant="contained"
