@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const errorHandler = (error: any): string => {
   let errorMessage: string = "Unknown error";
 
@@ -14,3 +15,4 @@ export const errorHandler = (error: any): string => {
 
   return errorMessage;
 };
+/* eslint-enable @typescript-eslint/no-explicit-any */

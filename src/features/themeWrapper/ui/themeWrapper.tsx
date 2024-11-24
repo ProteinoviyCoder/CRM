@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/apiHooks";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { FC, memo, ReactNode, useEffect, useState } from "react";
+import { FC, memo, ReactNode, useEffect } from "react";
 import {
   actionSetTheme,
   actionSetThemeMode,
@@ -25,9 +25,11 @@ const InititalThemeWrapper: FC<InitialThemeWrapperProps> = ({ children }) => {
 
   useEffect(() => {
     if (userThemSetting?.theme && userThemSetting?.mod) {
-      for (let i in themes) {
-        if (userThemSetting.theme.toLowerCase() === i.toLowerCase()) {
-          dispatch(actionSetTheme(themes[i].palettes));
+      for (const themeOfThemes in themes) {
+        if (
+          userThemSetting.theme.toLowerCase() === themeOfThemes.toLowerCase()
+        ) {
+          dispatch(actionSetTheme(themes[themeOfThemes].palettes));
           dispatch(actionSetThemeMode(userThemSetting.mod as ModeTheme));
           return;
         }

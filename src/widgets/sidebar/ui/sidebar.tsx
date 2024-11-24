@@ -59,7 +59,8 @@ const InitialSidebar: FC<InitialSidebarProps> = ({
       }}
       PaperProps={{
         onClick: (e: React.MouseEvent<HTMLDivElement>) => {
-          e.preventDefault(), e.stopPropagation();
+          e.stopPropagation();
+          e.preventDefault();
         },
       }}
       variant="permanent"
@@ -105,6 +106,7 @@ const InitialSidebar: FC<InitialSidebarProps> = ({
         {dataForSidebar.map((itemSidebar) => {
           return (
             <SidebarItem
+              key={itemSidebar.text}
               itemSidebar={itemSidebar}
               isOpenSidebar={isOpenSidebar}
             ></SidebarItem>

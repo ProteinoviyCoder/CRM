@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 
-  const { business, decoded, user, error } = verifyAndGetBusiness(req);
+  const { business, user, error } = verifyAndGetBusiness(req);
 
   if (error) {
     return res.status(error.status).json({ message: error.message });

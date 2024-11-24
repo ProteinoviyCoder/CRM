@@ -20,7 +20,7 @@ const Team = () => {
           height: "100%",
         }}
       >
-        <Typography>You don't have enough access</Typography>
+        <Typography>You don&apos;t have enough access</Typography>
       </Box>
     );
   }

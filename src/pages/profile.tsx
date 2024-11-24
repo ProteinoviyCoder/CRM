@@ -24,7 +24,7 @@ import {
 import { DarkMode, LightMode } from "@mui/icons-material";
 import { useChangeUserThemeSettingMutation } from "@/features/themeWrapper/api/changeThemeSettings";
 
-const profile: FC = () => {
+const Profile: FC = () => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state) => state.user.user);
   const themeSettings = useAppSelector((state) => state.theme);
@@ -87,10 +87,12 @@ const profile: FC = () => {
               select
               onChange={(e) => {
                 const name = e.target.value;
-                for (let i in themes) {
-                  if (i.toLowerCase().includes(name.toLowerCase())) {
-                    dispatch(actionSetTheme(themes[i].palettes));
-                    dispatch(actionSetUserTheme(i));
+                for (const themeOfThemes in themes) {
+                  if (
+                    themeOfThemes.toLowerCase().includes(name.toLowerCase())
+                  ) {
+                    dispatch(actionSetTheme(themes[themeOfThemes].palettes));
+                    dispatch(actionSetUserTheme(themeOfThemes));
 
                     return;
                   }
@@ -163,4 +165,4 @@ const profile: FC = () => {
   );
 };
 
-export default profile;
+export default Profile;
