@@ -1,15 +1,19 @@
 export const businessesBD = [
   {
-    businessId: "coffe-to-go",
-    businessName: "Coffe to Go",
+    businessId: "suck-&-go",
+    businessName: "Suck&Go",
     owner: {
-      id: "coffe-to-go-owner",
+      id: "suck-&-go-owner",
       username: "Daniil",
       passwordHash:
         "$2b$10$mKtlPj/EKayTYCAS6jjtVeq3/DIcZS/0kB9zmeDCGJX7xHlnTcY6a",
-      permissions: ["all"],
+      permissions: ["get_team"],
       role: "owner",
-      businessId: "coffe-to-go",
+      businessId: "suck-&-go",
+      themeSetting: {
+        theme: "standart",
+        mod: "light",
+      },
     },
     team: [
       {
@@ -17,18 +21,39 @@ export const businessesBD = [
         username: "worker1",
         passwordHash:
           "$2b$10$mKtlPj/EKayTYCAS6jjtVeq3/DIcZS/0kB9zmeDCGJX7xHlnTcY6a",
-        permissions: ["get_users"],
+        permissions: ["get_team"],
         role: "admin",
-        businessId: "coffe-to-go",
+        businessId: "suck-&-go",
+        themeSetting: {
+          theme: "standart",
+          mod: "light",
+        },
       },
       {
         id: "2",
         username: "worker2",
         passwordHash:
           "$2b$10$krpoS4d5ySuHmNzJjv5IIumAIo/tmA6HhNh0GVLOmF/DYyPKwc8/C",
-        permissions: [],
-        role: "user",
-        businessId: "coffe-to-go",
+        permissions: ["get_team"],
+        role: "employee",
+        businessId: "suck-&-go",
+        themeSetting: {
+          theme: "standart",
+          mod: "light",
+        },
+      },
+      {
+        id: "3",
+        username: "1",
+        passwordHash:
+          "$2b$10$Dmh.rGvY/NOm0iYsdds9JuEKUQ7DE0mUTRBXh.ux0tYs4JIrGnvmO",
+        permissions: ["get_tea"],
+        role: "admin",
+        businessId: "suck-&-go",
+        themeSetting: {
+          theme: "green",
+          mod: "dark",
+        },
       },
     ],
     tasks: [
@@ -48,9 +73,13 @@ export const businessesBD = [
       username: "Kavka",
       passwordHash:
         "$2b$10$mKtlPj/EKayTYCAS6jjtVeq3/DIcZS/0kB9zmeDCGJX7xHlnTcY6a",
-      permissions: ["all"],
+      permissions: ["get_team"],
       role: "owner",
       businessId: "build-the-house",
+      themeSetting: {
+        theme: "peach",
+        mod: "dark",
+      },
     },
     team: [
       {
@@ -58,9 +87,26 @@ export const businessesBD = [
         username: "workerteam2",
         passwordHash:
           "$2b$10$mKtlPj/EKayTYCAS6jjtVeq3/DIcZS/0kB9zmeDCGJX7xHlnTcY6a",
-        permissions: ["get_users"],
+        permissions: ["get_team"],
         role: "admin",
         businessId: "build-the-house",
+        themeSetting: {
+          theme: "standart",
+          mod: "light",
+        },
+      },
+      {
+        id: "2",
+        username: "2",
+        passwordHash:
+          "$2b$10$j4Q8HspUXrMx4zseDQCzuu7Yp.FBkuTypBM7d9XWa./ME79ghtJjG",
+        permissions: ["get_team"],
+        role: "admin",
+        businessId: "build-the-house",
+        themeSetting: {
+          theme: "peach",
+          mod: "light",
+        },
       },
     ],
     tasks: [

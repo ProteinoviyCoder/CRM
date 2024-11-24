@@ -146,6 +146,7 @@ const InitialLoginForm: FC = () => {
       username: response.data!.userForResponse!.username!,
       permissions: response.data!.userForResponse!.permissions!,
       role: response.data!.userForResponse!.role!,
+      themeSetting: response.data!.userForResponse!.themeSetting!,
     };
 
     const business: Business = {
@@ -228,9 +229,21 @@ const InitialLoginForm: FC = () => {
               }}
             >
               {loginFormData.password.isVisibleText ? (
-                <Visibility></Visibility>
+                <Visibility
+                  sx={(theme) => ({
+                    color: theme.palette.getContrastText(
+                      theme.palette.background.paper
+                    ),
+                  })}
+                ></Visibility>
               ) : (
-                <VisibilityOff></VisibilityOff>
+                <VisibilityOff
+                  sx={(theme) => ({
+                    color: theme.palette.getContrastText(
+                      theme.palette.background.paper
+                    ),
+                  })}
+                ></VisibilityOff>
               )}
             </InputAdornment>
           ),
@@ -271,7 +284,7 @@ const InitialLoginForm: FC = () => {
         sx={(theme) => ({
           marginTop: "35px",
           fontWeight: "400",
-          color: theme.palette.getContrastText(theme.palette.secondary.main),
+          color: theme.palette.getContrastText(theme.palette.background.paper),
           borderColor: "secondary.main",
           ":hover": {
             backgroundColor: "secondary.main",

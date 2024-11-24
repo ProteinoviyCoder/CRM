@@ -1,7 +1,9 @@
-import { useAppSelector } from "@/shared/hooks/apiHooks";
-import { Box, AppBar, Toolbar, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useRouter } from "next/router";
-import { FC, memo, ReactNode } from "react";
+import { FC, memo, ReactNode, useState } from "react";
+import { Header } from "@/widgets/header/ui/header";
+import { Sidebar } from "@/widgets/sidebar/ui/sidebar";
+import { Main } from "@/widgets/main/ui/main";
 
 type InitialLayoutProps = {
   children?: ReactNode;
@@ -9,21 +11,31 @@ type InitialLayoutProps = {
 
 const InitialLayout: FC<InitialLayoutProps> = ({ children }) => {
   const router = useRouter();
-  const business = useAppSelector((state) => state.business.business);
-  console.log(business);
+
+  const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(true);
 
   if (router.pathname === "/login" || router.pathname === "/registration") {
     return children;
   }
 
   return (
-    <Box>
-      <AppBar>
-        <Toolbar>
-          <Typography>{business?.businessName || "loading..."}</Typography>
-        </Toolbar>
-      </AppBar>
-      <Box sx={{ marginTop: "80px" }}>{children}</Box>
+    <Box
+      sx={{
+        maxWidth: "1920px",
+        width: "100%",
+        margin: "0 auto",
+        position: "relative",
+      }}
+    >
+      <Header
+        setIsOpenSidebar={setIsOpenSidebar}
+        isOpenSidebar={isOpenSidebar}
+      ></Header>
+      <Sidebar
+        isOpenSidebar={isOpenSidebar}
+        setIsOpenSidebar={setIsOpenSidebar}
+      ></Sidebar>
+      <Main isOpenSidebar={isOpenSidebar}>{children}</Main>
     </Box>
   );
 };

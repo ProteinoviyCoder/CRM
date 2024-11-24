@@ -25,13 +25,14 @@ export function verifyAndGetBusiness(req) {
       return { error: { status: 404, message: "Business not found" } };
     }
 
-    let isUserExistInBusiness = business.team.some(
+    let userInBusiness = business.team.find(
       (worker) => worker.username === decoded.username
     );
-    if (!isUserExistInBusiness) {
-      isUserExistInBusiness = business.owner.username === decoded.username;
+    if (!userInBusiness) {
+      userInBusiness =
+        business.owner.username === decoded.username ? business.owner : false;
 
-      if (!isUserExistInBusiness) {
+      if (!userInBusiness) {
         return {
           error: {
             status: 401,
@@ -41,7 +42,8 @@ export function verifyAndGetBusiness(req) {
       }
     }
 
-    return { business, decoded };
+    // for use in code anywhere -------- const { business, decoded, user, error } = verifyAndGetBusiness(req);
+    return { business, decoded, user: userInBusiness };
   } catch (error) {
     console.error("Error verifying token", error);
     return { error: { status: 401, message: "Invalid or expired token" } };
