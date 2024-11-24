@@ -7,11 +7,18 @@ export default async function handler(req, res) {
   // Отправка ответа с токенами в куки
   const isProd = process.env.NODE_ENV === "production";
 
+  res.setHeader(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, proxy-revalidate"
+  );
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+
   res.setHeader("Set-Cookie", [
-    `accessToken=${""}; HttpOnly; Path=/; Max-Age=1200; Domain; ${
+    `accessToken=; HttpOnly; Path=/; Max-Age=0; Domain; ${
       isProd ? "Secure; SameSite=Strict" : ""
     }`,
-    `refreshToken=${""}; HttpOnly; Path=/; Max-Age=2592000; Domain; ${
+    `refreshToken=; HttpOnly; Path=/; Max-Age=0; Domain; ${
       isProd ? "Secure; SameSite=Strict" : ""
     }`,
   ]);
