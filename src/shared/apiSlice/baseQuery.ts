@@ -14,7 +14,7 @@ const baseSettingRequest = fetchBaseQuery({
     const username = (getState() as { user: { user: User } }).user?.user
       ?.username;
     if (username) {
-      headers.set("X-username", username);
+      headers.set("X-Username", username);
     }
 
     return headers;

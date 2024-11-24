@@ -28,6 +28,14 @@ const InitialSidebar: FC<InitialSidebarProps> = ({
 
     dispatch(actionClearBusiness());
     dispatch(actionLogoutUser());
+
+    if ("caches" in window) {
+      const cacheNames = await caches.keys();
+      await Promise.all(cacheNames.map((cache) => caches.delete(cache)));
+    }
+
+    localStorage.clear();
+    sessionStorage.clear();
     window.location.reload();
   };
 
