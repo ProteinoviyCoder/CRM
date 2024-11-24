@@ -4,12 +4,21 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query";
-import { actionLogoutUser } from "@/shared/storeSlices/userSlice";
+import { actionLogoutUser, User } from "@/shared/storeSlices/userSlice";
 import { actionClearBusiness } from "../storeSlices/businessSlice";
 
 const baseSettingRequest = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_URL_SERVER,
   credentials: "include",
+  prepareHeaders: (headers, { getState }) => {
+    const username = (getState() as { user: { user: User } }).user?.user
+      ?.username;
+    if (username) {
+      headers.set("X-username", username);
+    }
+
+    return headers;
+  },
 });
 
 export const baseQuery: BaseQueryFn<

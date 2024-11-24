@@ -28,6 +28,7 @@ const InitialSidebar: FC<InitialSidebarProps> = ({
 
     dispatch(actionClearBusiness());
     dispatch(actionLogoutUser());
+    window.location.reload();
   };
 
   const dataForSidebar: DataItemForSidebar<void | boolean>[] = [
