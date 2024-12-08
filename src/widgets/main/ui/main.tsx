@@ -14,7 +14,7 @@ const InitialMain: FC<InitialMainProps> = ({ children, isOpenSidebar }) => {
   }, []);
   return (
     <Paper
-      sx={{
+      sx={(theme) => ({
         marginTop: "80px",
         marginLeft: {
           xs: isOpenSidebar ? "80px" : "90px",
@@ -27,7 +27,17 @@ const InitialMain: FC<InitialMainProps> = ({ children, isOpenSidebar }) => {
         transform: show ? "scale(1)" : "scale(0.5)",
         overflowY: "auto",
         overflowX: "hidden",
-      }}
+        "&::-webkit-scrollbar": {
+          backgroundColor: theme.palette.background.paper,
+          width: "4px",
+          borderRadius: "10px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: theme.palette.primary.main,
+          width: "4px",
+          borderRadius: "10px",
+        },
+      })}
     >
       {children}
     </Paper>

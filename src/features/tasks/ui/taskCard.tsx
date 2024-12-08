@@ -1,5 +1,5 @@
 import { FC, memo } from "react";
-import { AccountCircle } from "@mui/icons-material";
+import { Assignment } from "@mui/icons-material";
 import {
   Box,
   List,
@@ -9,13 +9,13 @@ import {
   useTheme,
   alpha,
 } from "@mui/material";
-import type { User } from "@/shared/storeSlices/userSlice";
+import type { BusinessTask } from "@/shared/storeSlices/businessSlice";
 
-type InitialUserCardProps = {
-  userData: User;
+type InitialTaskCardProps = {
+  taskData: BusinessTask;
 };
 
-const InitialUserCard: FC<InitialUserCardProps> = ({ userData }) => {
+const InitialTaskCard: FC<InitialTaskCardProps> = ({ taskData }) => {
   const theme = useTheme();
 
   return (
@@ -34,10 +34,11 @@ const InitialUserCard: FC<InitialUserCardProps> = ({ userData }) => {
 
         boxShadow: `0 0 5px 5px ${alpha(theme.palette.primary.dark, 0.3)}`,
         borderRadius: "5px",
+        opacity: taskData.status ? "0.6" : "1",
       }}
     >
       <Box>
-        <AccountCircle sx={{ width: 120, height: 120 }}></AccountCircle>
+        <Assignment sx={{ width: 120, height: 120 }}></Assignment>
       </Box>
       <List
         sx={{
@@ -61,21 +62,20 @@ const InitialUserCard: FC<InitialUserCardProps> = ({ userData }) => {
       >
         <ListItem>
           <ListItemText>
-            <Typography variant="h6">Name: {userData.username}</Typography>
-          </ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemText>
-            <Typography variant="body1">Role: {userData.role}</Typography>
+            <Typography variant="h6">Title: {taskData.title}</Typography>
           </ListItemText>
         </ListItem>
         <ListItem>
           <ListItemText>
             <Typography variant="body1">
-              Permissions:{" "}
-              {typeof userData.permissions === "object"
-                ? userData.permissions.join(", ")
-                : userData.permissions}
+              Description: {taskData.description}
+            </Typography>
+          </ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemText>
+            <Typography variant="body1">
+              Status: {taskData.status === true ? "Ready" : "In work"}
             </Typography>
           </ListItemText>
         </ListItem>
@@ -84,4 +84,4 @@ const InitialUserCard: FC<InitialUserCardProps> = ({ userData }) => {
   );
 };
 
-export const UserCard = memo(InitialUserCard);
+export const TaskCard = memo(InitialTaskCard);

@@ -109,7 +109,6 @@ export default async function handler(req, res) {
     status: 200,
     message: "Login successful",
     userForResponse,
-    tasks: business.tasks,
     businessName: business.businessName,
   });
 }

@@ -1,5 +1,5 @@
 const a404 = () => {
-  return <div>Иди нахуй сука....</div>;
+  return <div>Ресурс не найден... Похоже такой страницы нет :(</div>;
 };
 
 export default a404;

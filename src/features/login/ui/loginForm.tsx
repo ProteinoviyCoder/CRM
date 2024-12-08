@@ -151,7 +151,7 @@ const InitialLoginForm: FC = () => {
 
     const business: Business = {
       businessName: response.data!.businessName!,
-      businessTasks: [...response.data!.tasks!],
+      businessTasks: null,
     };
 
     dispatch(actionSetUser(user));
@@ -279,7 +279,7 @@ const InitialLoginForm: FC = () => {
         Log in
       </Button>
 
-      <Button
+      {/* <Button
         variant="outlined"
         sx={(theme) => ({
           marginTop: "35px",
@@ -295,7 +295,7 @@ const InitialLoginForm: FC = () => {
         onClick={() => router.replace("/registration")}
       >
         Registration new business
-      </Button>
+      </Button> */}
     </Box>
   );
 };

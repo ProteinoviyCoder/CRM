@@ -1,15 +1,15 @@
 export const businessesBD = [
   {
-    businessId: "suck-&-go",
-    businessName: "Suck&Go",
+    businessId: "coffe-to-go",
+    businessName: "Coffe to Go",
     owner: {
-      id: "suck-&-go-owner",
+      id: "coffe-to-go-owner",
       username: "Daniil",
       passwordHash:
-        "$2b$10$mKtlPj/EKayTYCAS6jjtVeq3/DIcZS/0kB9zmeDCGJX7xHlnTcY6a",
-      permissions: ["get_team"],
+        "$2a$10$BYpMbfJsPSOXVptfwCvau..UaLHkJgEE/LJxoYcineNRNOrc3sN3O",
+      permissions: ["get_team", "create_worker", "get_all_tasks"],
       role: "owner",
-      businessId: "suck-&-go",
+      businessId: "coffe-to-go",
       themeSetting: {
         theme: "standart",
         mod: "light",
@@ -20,47 +20,42 @@ export const businessesBD = [
         id: "1",
         username: "worker1",
         passwordHash:
-          "$2b$10$mKtlPj/EKayTYCAS6jjtVeq3/DIcZS/0kB9zmeDCGJX7xHlnTcY6a",
-        permissions: ["get_team"],
+          "$2a$10$BYpMbfJsPSOXVptfwCvau..UaLHkJgEE/LJxoYcineNRNOrc3sN3O",
+        permissions: ["get_team", "get_all_tasks"],
         role: "admin",
-        businessId: "suck-&-go",
+        businessId: "coffe-to-go",
         themeSetting: {
-          theme: "standart",
-          mod: "light",
+          theme: "peach",
+          mod: "dark",
         },
       },
       {
         id: "2",
         username: "worker2",
         passwordHash:
-          "$2b$10$krpoS4d5ySuHmNzJjv5IIumAIo/tmA6HhNh0GVLOmF/DYyPKwc8/C",
-        permissions: ["get_team"],
+          "$2a$10$BYpMbfJsPSOXVptfwCvau..UaLHkJgEE/LJxoYcineNRNOrc3sN3O",
+        permissions: ["get_all_tasks"],
         role: "employee",
-        businessId: "suck-&-go",
-        themeSetting: {
-          theme: "standart",
-          mod: "light",
-        },
-      },
-      {
-        id: "3",
-        username: "1",
-        passwordHash:
-          "$2b$10$Dmh.rGvY/NOm0iYsdds9JuEKUQ7DE0mUTRBXh.ux0tYs4JIrGnvmO",
-        permissions: ["get_tea"],
-        role: "admin",
-        businessId: "suck-&-go",
+        businessId: "coffe-to-go",
         themeSetting: {
           theme: "green",
-          mod: "dark",
+          mod: "light",
         },
       },
     ],
     tasks: [
       {
         id: 1,
-        title: "Разработать crm систему",
-        description: "Полная разработка crm системы, включая все аспекты",
+        title: "Order coffee beans",
+        description:
+          "Order coffee beans that meet the company's quality standards",
+        status: true,
+      },
+      {
+        id: 2,
+        title: "Take the coffee beans to the coffee shop",
+        description:
+          "Take the coffee beans to the coffee shop in a company car",
         status: false,
       },
     ],
@@ -72,35 +67,35 @@ export const businessesBD = [
       id: "build-the-house-owner",
       username: "Kavka",
       passwordHash:
-        "$2b$10$mKtlPj/EKayTYCAS6jjtVeq3/DIcZS/0kB9zmeDCGJX7xHlnTcY6a",
-      permissions: ["get_team"],
+        "$2a$10$BYpMbfJsPSOXVptfwCvau..UaLHkJgEE/LJxoYcineNRNOrc3sN3O",
+      permissions: ["get_team", "create_worker", "get_all_tasks"],
       role: "owner",
       businessId: "build-the-house",
       themeSetting: {
-        theme: "peach",
+        theme: "standart",
         mod: "dark",
       },
     },
     team: [
       {
         id: "1",
-        username: "workerteam2",
+        username: "workerA",
         passwordHash:
-          "$2b$10$mKtlPj/EKayTYCAS6jjtVeq3/DIcZS/0kB9zmeDCGJX7xHlnTcY6a",
-        permissions: ["get_team"],
+          "$2a$10$BYpMbfJsPSOXVptfwCvau..UaLHkJgEE/LJxoYcineNRNOrc3sN3O",
+        permissions: ["get_team", "get_all_tasks"],
         role: "admin",
         businessId: "build-the-house",
         themeSetting: {
-          theme: "standart",
-          mod: "light",
+          theme: "green",
+          mod: "dark",
         },
       },
       {
         id: "2",
-        username: "2",
+        username: "workerB",
         passwordHash:
-          "$2b$10$j4Q8HspUXrMx4zseDQCzuu7Yp.FBkuTypBM7d9XWa./ME79ghtJjG",
-        permissions: ["get_team"],
+          "$2a$10$BYpMbfJsPSOXVptfwCvau..UaLHkJgEE/LJxoYcineNRNOrc3sN3O",
+        permissions: ["get_all_tasks"],
         role: "admin",
         businessId: "build-the-house",
         themeSetting: {
@@ -112,8 +107,21 @@ export const businessesBD = [
     tasks: [
       {
         id: 1,
-        title: "Ну построить дом наверное хз",
-        description: "Ну дом сказал же уже",
+        title: "Count the number of completed projects",
+        description: "Calculate the number of completed projects per quarter",
+        status: true,
+      },
+      {
+        id: 2,
+        title: "Send the report to the accountant",
+        description:
+          "Send a report on completed projects to a full-time accountant",
+        status: false,
+      },
+      {
+        id: 3,
+        title: "Process new orders",
+        description: "Process new orders received from the site",
         status: false,
       },
     ],

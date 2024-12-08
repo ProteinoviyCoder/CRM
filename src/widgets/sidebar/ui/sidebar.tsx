@@ -1,10 +1,10 @@
 import { actionClearBusiness } from "@/shared/storeSlices/businessSlice";
 import { actionLogoutUser } from "@/shared/storeSlices/userSlice";
-import { ExitToAppSharp, Groups3, Home } from "@mui/icons-material";
+import { ExitToAppSharp, Groups3, Home, Assignment } from "@mui/icons-material";
 import { Drawer, List } from "@mui/material";
 import { FC, memo, useEffect, useState } from "react";
 import { useLazyGetLogoutQuery } from "../api/getLogout";
-import { useAppDispatch } from "@/shared/hooks/apiHooks";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/apiHooks";
 import { useRouter } from "next/router";
 import { SidebarItem } from "./sidebarItem";
 import { DataItemForSidebar } from "../model/types";
@@ -22,6 +22,7 @@ const InitialSidebar: FC<InitialSidebarProps> = ({
   const [getLogout] = useLazyGetLogoutQuery();
   const [show, setShow] = useState<boolean>(false);
   const route = useRouter();
+  const dataUser = useAppSelector((state) => state.user.user);
 
   const logoutFromSystem = async (): Promise<void> => {
     await getLogout(null);
@@ -44,16 +45,25 @@ const InitialSidebar: FC<InitialSidebarProps> = ({
       icon: Home,
       event: () => route.push("/"),
       text: "Home",
+      isAccess: true,
     },
     {
       icon: Groups3,
       event: () => route.push("/team"),
       text: "Team",
+      isAccess: dataUser?.permissions.includes("get_team") ? true : false,
+    },
+    {
+      icon: Assignment,
+      event: () => route.push("/allTasks"),
+      text: "All tasks",
+      isAccess: dataUser?.permissions.includes("get_all_tasks") ? true : false,
     },
     {
       icon: ExitToAppSharp,
       event: logoutFromSystem,
       text: "Log out",
+      isAccess: true,
     },
   ];
 
@@ -113,6 +123,9 @@ const InitialSidebar: FC<InitialSidebarProps> = ({
         })}
       >
         {dataForSidebar.map((itemSidebar) => {
+          if (!itemSidebar.isAccess) {
+            return;
+          }
           return (
             <SidebarItem
               key={itemSidebar.text}

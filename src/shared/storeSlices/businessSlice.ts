@@ -9,7 +9,7 @@ export type BusinessTask = {
 
 export type Business = {
   businessName: string;
-  businessTasks: BusinessTask[];
+  businessTasks: BusinessTask[] | null;
 };
 
 type BusinessInitialState = {
