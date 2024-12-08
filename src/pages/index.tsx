@@ -6,7 +6,7 @@ import type { User } from "@/shared/storeSlices/userSlice";
 import type { BusinessTask } from "@/shared/storeSlices/businessSlice";
 import { useRouter } from "next/router";
 import { useLazyGetAllTasksQuery } from "@/features/tasks/api/tasksApi";
-import { CurrentTime } from "@/shared/components/modalWindow/currentTime";
+import { CurrentTime } from "@/shared/components/currentTime/currentTime";
 
 export default function Home() {
   const router = useRouter();
