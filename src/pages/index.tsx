@@ -22,7 +22,9 @@ export default function Home() {
     if (userData?.permissions.includes("get_team")) {
       const getTeamAsync = async () => {
         const response = await getTeam(null);
-        response.data?.team && setDataTeam(response.data.team);
+        if (response.data?.team) {
+          setDataTeam(response.data.team);
+        }
       };
       getTeamAsync();
     }
@@ -30,7 +32,9 @@ export default function Home() {
     if (userData?.permissions.includes("get_all_tasks")) {
       const getTasksAsync = async () => {
         const response = await getTasks(null);
-        response.data?.tasks && setDataTasks(response.data.tasks);
+        if (response.data?.tasks) {
+          setDataTasks(response.data.tasks);
+        }
       };
       getTasksAsync();
     }

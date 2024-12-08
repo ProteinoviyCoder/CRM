@@ -9,7 +9,7 @@ const InitialCurrentTime: FC<InitialCurrentTimeProps> = ({ variantText }) => {
   const [time, setTime] = useState<string>("--:--:--");
 
   useEffect(() => {
-    let timerId = setInterval(() => {
+    const timerId = setInterval(() => {
       const now = new Date();
       const hours =
         now.getHours().toString().length > 1

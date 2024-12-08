@@ -1,4 +1,4 @@
-import { BorderColor, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Alert,
   alpha,
@@ -416,7 +416,7 @@ const InitialAddWorkerForm = () => {
         <Typography variant="body1">Permissions:</Typography>
         {permissionsSettings.map((permission) => {
           return (
-            <ListItem>
+            <ListItem key={permission.value}>
               <Checkbox
                 value={permission.value}
                 onChange={() =>

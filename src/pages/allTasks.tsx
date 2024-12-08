@@ -5,7 +5,7 @@ import { errorHandler } from "@/shared/utils/errorHandler";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { FC } from "react";
 
-const allTasks: FC = () => {
+const AllTasks: FC = () => {
   const userData = useAppSelector((state) => state.user.user);
   const { data: tasksData, error } = useGetAllTasksQuery(null);
   const isAllowedUser = userData?.permissions.includes("get_all_tasks");
@@ -75,4 +75,4 @@ const allTasks: FC = () => {
   );
 };
 
-export default allTasks;
+export default AllTasks;

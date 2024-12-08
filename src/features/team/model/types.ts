@@ -5,10 +5,6 @@ export type TeamDataDto = {
   team?: User[];
 };
 
-export type PermissionsSettins = {
-  [ket: string]: {};
-};
-
 export type UserSettingsData = {
   username: {
     text: string;
@@ -31,4 +27,11 @@ export type UserSettingsData = {
     isVisibleText: boolean;
   };
   role: string;
+};
+
+export type UserDto = {
+  username: string;
+  password: string;
+  role: string;
+  permissions: string[];
 };

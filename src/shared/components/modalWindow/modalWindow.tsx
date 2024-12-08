@@ -1,4 +1,4 @@
-import React, { memo, FC, ReactNode, useState, useEffect } from "react";
+import React, { memo, FC, ReactNode } from "react";
 import { Modal, Box, Typography, keyframes } from "@mui/material";
 import { Close } from "@mui/icons-material";
 

@@ -1,5 +1,5 @@
 import { apiStore } from "@/shared/apiSlice/api";
-import { TeamDataDto } from "../model/types";
+import { TeamDataDto, UserDto } from "../model/types";
 
 const teamApi = apiStore
   .enhanceEndpoints({ addTagTypes: ["Team"] })
@@ -18,7 +18,7 @@ const teamApi = apiStore
               ]
             : [{ type: "Team", id: "LIST" }],
       }),
-      addNewWorker: builder.mutation<null, any>({
+      addNewWorker: builder.mutation<null, UserDto>({
         query: (body) => ({
           url: "team/addNewWorker",
           method: "POST",
