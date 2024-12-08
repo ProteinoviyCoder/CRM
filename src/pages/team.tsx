@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Typography,
-  TextField,
-} from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { UserCard } from "@/features/team/ui/userCard";
 import { useAppSelector } from "@/shared/hooks/apiHooks";
 import { useGetTeamQuery } from "@/features/team/api/teamApi";
